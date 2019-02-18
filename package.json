@@ -2,7 +2,7 @@
   "name": "node",
   "version": "1.0.0",
   "description": "",
-  "main": "hello.js",
+  "main": "hello-world-server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,9 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "hapi": "^18.0.1",
+    "inert": "^5.1.2",
     "moment": "^2.24.0",
+    "pug": "^2.0.3",
     "sequelize": "^4.42.0",
     "slugify": "^1.3.4",
-    "sqlite3": "^4.0.6"
+    "sqlite3": "^4.0.6",
+    "vision": "^5.4.4"
   }
 }

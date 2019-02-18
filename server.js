@@ -1,13 +1,34 @@
 const Hapi = require('hapi');
+
 const Settings = require('./settings');
 const server = new Hapi.Server({ port: Settings.port });
 const Routes = require('./lib/route');
 const Models = require('./lib/models/');
+const Path = require('path');
+const Pug = require('pug');
+const Vision = require('vision');
+const Inert = require('inert');
 
+//server.route(Routes);
 
-server.route(Routes);
+/*server.route({
+    method: 'GET',
+    path: '/',
+    handler: (request, h) => 'Hello, World!'
+});
+*/
 
 const init = async () => {
+    await server.register([Vision, Inert]);
+    server.views({
+        engines: { pug: Pug },
+        path: Path.join(__dirname, 'lib/views'),
+        compileOptions: {
+            pretty: false,
+        },
+        isCached: Settings.env === 'production'
+    });
+    server.route(Routes);
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);
 };
@@ -20,3 +41,5 @@ process.on('unhandledRejection', (err) => {
 Models.sequelize.sync().then(() => {
     init();
 });
+
+//init();
